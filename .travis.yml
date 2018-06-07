@@ -1,0 +1,24 @@
+language: php
+
+php:
+- 7.1
+
+services:
+- mysql
+sudo: true
+
+before_script:
+- composer install
+- mv .env.example .env
+- php artisan key:generate
+
+script:
+- ./vendor/bin/phpunit --configuration ./phpunit.xml
+
+before_install:
+- bash .travis.install-mysql-5.7.sh
+- mysql -e "CREATE DATABASE testing_fitapp"
+
+notifications:
+  email:
+    - alymosul@gmail.com
